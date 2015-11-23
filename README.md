@@ -1,26 +1,18 @@
-# Roundcube-mail
+# Roundcube Mail
 
-This README outlines the details of collaborating on this Ember addon.
+This is the Mail app for Roundcube. It is structured as an Ember Addon.
 
-## Installation
+Once Roundcube Shell is running, open the app at `/mail`.
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+## Usage
 
-## Running
-
-* `ember server`
-* Visit your app at http://localhost:4200.
+- `git clone` this repository
+- `npm install`
+- `bower install`
+- `npm link` to expose the cloned project to Roundcube Shell.
 
 ## Running Tests
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+- `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
+- `ember test`
+- `ember test --server`
