@@ -1,0 +1,40 @@
+.roundcube-mail {
+  .message {
+    order: 2;
+    flex-grow: 1;
+  }
+
+  .message-view {
+    width: 100%;
+    max-width: $max-message-width;
+    padding: $content-padding;
+    padding-top: 0;
+
+    .subject {
+      font-size: $message-view-subject-font-size;
+      color: $ui-text-color;
+      padding: $content-padding;
+      padding-bottom: 0;
+    }
+
+    .metadata {
+      font-size: $ui-font-size;
+      color: $ui-secondary-text-color;
+      padding: $content-padding;
+
+      .from, .to, .cc {
+        color: $ui-text-color;
+      }
+    }
+
+    .content {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: inherit;
+
+      background-color: transparent;
+      border: none;
+      padding: $content-padding;
+    }
+  }
+}

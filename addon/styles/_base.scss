@@ -1,0 +1,70 @@
+$mailbox-list-width: 180px;
+$thread-list-width: 350px;
+$max-message-width: 650px;
+$content-padding: 10px;
+
+$ui-font-size: 10pt;
+$thread-list-sender-font-size: 10pt;
+$thread-list-subject-font-size: 10pt;
+$thread-list-subject-line-height: 15pt;
+$thread-list-preview-font-size: 8pt;
+$thread-list-preview-line-height: 12pt;
+$message-view-subject-font-size: 18pt;
+
+// Standard UI colors
+$ui-border-color: lightgray;
+
+$ui-background-color: white;
+$ui-text-color: black;
+$ui-hover-text-color: black;
+
+// For alternate UI widgets (special panes, dialogs, etc)
+$ui-alternate-background-color: #333333;
+$ui-alternate-text-color: darkgray;
+$ui-alternate-hover-background-color: rgba(169, 68, 66, 0.5);
+
+// For selections in lists or menus
+$ui-select-background-color: rgba(169, 68, 66, 1);
+$ui-select-text-color: white;
+$ui-hover-background-color: whitesmoke;
+
+// For "minor" text (previews, etc)
+$ui-secondary-text-color: gray;
+
+
+
+.roundcube-mail {
+  height: 100%;
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    height: 100%;
+  }
+
+  .mail-pane {
+    padding: 0;
+    border-radius: 0;
+    height: 100%;
+    overflow: auto;
+
+    .list-group-item {
+      &:first-child, &:last-child {
+        border-radius: 0;
+      }
+
+      &:first-child {
+        border-top: 0;
+      }
+
+      &:first-child {
+        border-bottom: 0;
+      }
+
+      .badge {
+        float: right;
+      }
+    }
+  }
+}

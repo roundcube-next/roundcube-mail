@@ -1,0 +1,19 @@
+<div class="mail-pane message">
+  <div class="message-view">
+    <div class="subject">{{model.subject}}</div>
+    <div class="metadata">
+      <div>From: <span class="from">{{model.from.name}} &lt;{{model.from.email}}&gt;</span></div>
+      <div>To:
+        {{#each model.to as |recipient|}}
+          <span class="to">{{recipient.name}} &lt;{{recipient.email}}&gt;</span>
+        {{/each}}
+      </div>
+      <div>CC:
+        {{#each model.cc as |recipient|}}
+          <span class="cc">{{recipient.name}} &lt;{{recipient.email}}&gt;</span>
+        {{/each}}
+      </div>
+    </div>
+    <pre class="content">{{{model.textBody}}}</pre>
+  </div>
+</div>

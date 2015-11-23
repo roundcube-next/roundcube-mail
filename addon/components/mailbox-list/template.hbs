@@ -1,0 +1,10 @@
+<ul class="list-group">
+  {{#each mailboxes as |mailbox|}}
+    {{#link-to 'shell.mail.mailbox' mailbox.name class='list-group-item' tagName='li'}}
+    {{mailbox.name}}
+      {{#if mailbox.unreadThreads}}
+        <span class="badge">{{mailbox.unreadThreads}}</span>
+      {{/if}}
+    {{/link-to}}
+  {{/each}}
+</ul>

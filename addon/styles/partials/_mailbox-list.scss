@@ -1,0 +1,27 @@
+.roundcube-mail {
+  .mailbox-list {
+    order: 0;
+    min-width: $mailbox-list-width;
+    background-color: $ui-alternate-background-color;
+
+    .list-group-item {
+      font-size: $ui-font-size;
+      background-color: transparent;
+      border: none;
+      color: $ui-alternate-text-color;
+      text-decoration: none;
+      &:hover {
+        background-color: $ui-alternate-hover-background-color;
+        cursor: pointer;
+      }
+      &.active {
+        background-color: $ui-select-background-color;
+        color: $ui-select-text-color;
+        font-weight: bold;
+        .badge {
+          color: $ui-text-color;
+        }
+      }
+    }
+  }
+}

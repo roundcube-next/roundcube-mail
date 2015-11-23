@@ -1,0 +1,9 @@
+<ul class="list-group">
+  {{#each model as |message|}}
+    {{#link-to 'shell.mail.mailbox.message' message.id class='list-group-item' tagName='li'}}
+      <span class="sender">{{message.from.name}}</span>
+      <div class="subject">{{message.subject}}</div>
+      <div class="preview">{{message.preview}}</div>
+    {{/link-to}}
+  {{/each}}
+</ul>

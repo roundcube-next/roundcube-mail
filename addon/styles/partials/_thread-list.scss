@@ -1,0 +1,48 @@
+.roundcube-mail {
+  .thread-list {
+    order: 1;
+    min-width: $thread-list-width;
+    width: 25%;
+    border-right: 1px solid $ui-border-color;
+
+    .list-group-item {
+      border-right: 0;
+
+      .sender {
+        font-weight: bold;
+        font-size: $thread-list-sender-font-size;
+      }
+
+      .subject {
+        font-size: $thread-list-subject-font-size;
+        line-height: $thread-list-subject-line-height;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-height: $thread-list-subject-line-height;
+      }
+
+      .preview {
+        color: $ui-secondary-text-color;
+        font-size: $thread-list-preview-font-size;
+        line-height: $thread-list-preview-line-height;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-height: 2 * $thread-list-preview-line-height;
+      }
+
+      &:hover {
+        background-color: $ui-hover-background-color;
+        cursor: pointer;
+      }
+
+      &.active {
+        background-color: $ui-select-background-color;
+        border-color: $ui-select-background-color;
+        .preview {
+          color: $ui-select-text-color;
+        }
+      }
+    }
+  }
+}

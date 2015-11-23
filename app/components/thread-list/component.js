@@ -1,0 +1,1 @@
+export { default } from 'roundcube-mail/components/thread-list/component';
