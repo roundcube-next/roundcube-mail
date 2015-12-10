@@ -6,7 +6,6 @@
 
   .message-view {
     width: 100%;
-    max-width: $max-message-width;
     padding: $content-padding;
     padding-top: 0;
 
@@ -21,6 +20,7 @@
       font-size: $ui-font-size;
       color: $ui-secondary-text-color;
       padding: $content-padding;
+      border-bottom: 1px solid $ui-border-color;
 
       .from, .to, .cc {
         color: $ui-text-color;
@@ -28,13 +28,27 @@
     }
 
     .content {
-      white-space: pre-wrap;
-      word-wrap: break-word;
       font-family: inherit;
-
+      font-size: $ui-font-size;
       background-color: transparent;
       border: none;
       padding: $content-padding;
+
+      #restricted {
+        max-width: $max-message-width;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      pre {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font-family: inherit;
+        font-size: $ui-font-size;
+        white-space: pre-wrap;
+        word-break: normal;
+      }
     }
   }
 }
