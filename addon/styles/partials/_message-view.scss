@@ -39,7 +39,9 @@
 
       .image-toggle-box {
         text-align: center;
-        background-color: whitesmoke;
+        border: 1px solid $ui-border-color;
+        padding: 5px;
+        margin-bottom: 10px;
       }
 
       pre {
