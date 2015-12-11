@@ -3,16 +3,20 @@
     <div class="subject">{{prettify model.subject}}</div>
     <div class="metadata">
       <div>From: <span class="from">{{prettify model.from.name}} &lt;{{model.from.email}}&gt;</span></div>
-      <div>To:
-        {{#each model.to as |recipient|}}
-          <span class="to">{{prettify recipient.name}} &lt;{{recipient.email}}&gt;</span>
-        {{/each}}
-      </div>
-      <div>CC:
-        {{#each model.cc as |recipient|}}
-          <span class="cc">{{prettify recipient.name}} &lt;{{recipient.email}}&gt;</span>
-        {{/each}}
-      </div>
+      {{#if model.to.length}}
+        <div>To:
+          {{#each model.to as |recipient|}}
+            <span class="to">{{prettify recipient.name}} &lt;{{recipient.email}}&gt;</span>
+          {{/each}}
+        </div>
+      {{/if}}
+      {{#if model.cc.length}}
+        <div>CC:
+          {{#each model.cc as |recipient|}}
+            <span class="cc">{{prettify recipient.name}} &lt;{{recipient.email}}&gt;</span>
+          {{/each}}
+        </div>
+      {{/if}}
     </div>
     <div class="content">{{{sanitize model}}}</div>
   </div>
