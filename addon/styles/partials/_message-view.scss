@@ -34,6 +34,11 @@
       border: none;
       padding: $content-padding;
 
+      .image-toggle-box {
+        text-align: center;
+        background-color: whitesmoke;
+      }
+
       #restricted {
         max-width: $max-message-width;
         margin-left: auto;

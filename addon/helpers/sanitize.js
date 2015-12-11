@@ -284,7 +284,7 @@ function sanitizeSelector(rootId, selector) {
  * @param {CSSStyleDeclaration} style
  * @return {String}
  */
-function sanitizeStyle(rootId, style) {
+function sanitizeStyle(rootId, options, style) {
   var output = '';
 
   for (let i = 0; i < style.length; i += 1) {
@@ -303,6 +303,13 @@ function sanitizeStyle(rootId, style) {
         }
       }
 
+      if (!options.imagesAllowed) {
+        // Remove any CSS rule that references a URL
+        if (/url\(.*?\)/ig.test(value)) {
+          continue;
+        }
+      }
+
       output += name + ':' + value + (important ? ' !important' : '') + ';';
     }
   }
@@ -316,7 +323,7 @@ function sanitizeStyle(rootId, style) {
  * @param {String} rootId
  * @param {CSSStyleSheet} sheet
  */
-function sanitizeStylesheet(rootId, sheet, output) {
+function sanitizeStylesheet(rootId, options, sheet, output) {
   var rules = sheet.cssRules;
 
   // In case of an already empty stylesheet, do nothing
@@ -331,13 +338,13 @@ function sanitizeStylesheet(rootId, sheet, output) {
       case CSSRule.STYLE_RULE:
         output.push(sanitizeSelector(rootId, rule.selectorText || ''));
         output.push('{');
-        output.push(sanitizeStyle(rootId, rule.style));
+        output.push(sanitizeStyle(rootId, options, rule.style));
         output.push('}\n');
         break;
       case CSSRule.MEDIA_RULE:
         output.push('@media ' + rule.media.mediaText);
         output.push('{\n');
-        output.push(sanitizeStylesheet(rootId, rule, output));
+        output.push(sanitizeStylesheet(rootId, options, rule, output));
         output.push('}\n');
         break;
     }
@@ -346,10 +353,10 @@ function sanitizeStylesheet(rootId, sheet, output) {
   return output;
 }
 
-function attachSanitizerHooks(rootId) {
+function attachSanitizerHooks(rootId, options) {
   function uponSanitizeElement(node, data) {
     if (data.tagName.toLowerCase() === 'style') {
-      node.textContent = sanitizeStylesheet(rootId, node.sheet, []).join('');
+      node.textContent = sanitizeStylesheet(rootId, options, node.sheet, []).join('');
     }
   }
 
@@ -359,7 +366,7 @@ function attachSanitizerHooks(rootId) {
 
     switch (name) {
       case 'style':
-        data.attrValue = sanitizeStyle(rootId, node.style);
+        data.attrValue = sanitizeStyle(rootId, options, node.style);
         break;
       case 'id':
       case 'for':
@@ -389,7 +396,7 @@ function detachSanitizerHooks() {
   DOMPurify.removeHook('afterSanitizeAttributes');
 }
 
-export function sanitize(params) {
+export function sanitize(params, options) {
   var message = params[0],
       contents = prettify.compute([message.htmlBody || message.textBody]),
       containerId = 'restricted',
@@ -399,7 +406,12 @@ export function sanitize(params) {
     container = document.createElement('pre');
     container.textContent = contents;
   } else {
-    attachSanitizerHooks(containerId);
+    console.log(options)
+    if (!options.imagesAllowed) {
+      FORBID_ATTR.push('src', 'background');
+    }
+
+    attachSanitizerHooks(containerId, options);
     var documentElement = DOMPurify.sanitize(contents, {
       SANITIZE_DOM: true,
       RETURN_DOM: true,

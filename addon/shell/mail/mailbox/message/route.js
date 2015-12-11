@@ -5,6 +5,7 @@ export default Ember.Route.extend({
     var messages = this.modelFor('shell.mail.mailbox'),
         message = _.find(messages, _.matchesProperty('id', params.message_id));
 
+    console.log(message);
     return message;
   }
 });
