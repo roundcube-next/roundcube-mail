@@ -1,5 +1,7 @@
-<div class="image-toggle-box">
-  <span>This message contains remote images.</span>
-  <a href='#' {{action 'showImages'}}>Show them?</a>
-</div>
-{{{sanitize message imagesAllowed=imagesAllowed}}}
+{{#if showImagesWarning}}
+  <div class="image-toggle-box">
+    <span>This message contains remote images.</span>
+    <a href='#' {{action 'showImages'}}>Show them?</a>
+  </div>
+{{/if}}
+{{{generatedContent}}}

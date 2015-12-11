@@ -1,6 +1,3 @@
-import Ember from 'ember';
-import prettify from './prettify';
-
 /*global DOMPurify, CSSRule*/
 
 function addToSet(set, array) {
@@ -241,6 +238,8 @@ var FORBID_ATTR = [
   'xmlns'
 ];
 
+var analysis = {};
+
 /**
  * Returns if a property is whitelisted. Prefixes and shorthand names
  * will be resolved.
@@ -306,6 +305,7 @@ function sanitizeStyle(rootId, options, style) {
       if (!options.imagesAllowed) {
         // Remove any CSS rule that references a URL
         if (/url\(.*?\)/ig.test(value)) {
+          analysis.imagesPresent = true;
           continue;
         }
       }
@@ -354,6 +354,8 @@ function sanitizeStylesheet(rootId, options, sheet, output) {
 }
 
 function attachSanitizerHooks(rootId, options) {
+  analysis = {};
+
   function uponSanitizeElement(node, data) {
     if (data.tagName.toLowerCase() === 'style') {
       node.textContent = sanitizeStylesheet(rootId, options, node.sheet, []).join('');
@@ -375,6 +377,11 @@ function attachSanitizerHooks(rootId, options) {
       case 'class':
         data.attrValue = value.trim().split(/\s+/)
           .map(className => (rootId + '-' + className)).join(' ');
+        break;
+      case 'src':
+      case 'background':
+        analysis.imagesPresent = true;
+        break;
     }
   }
 
@@ -396,52 +403,47 @@ function detachSanitizerHooks() {
   DOMPurify.removeHook('afterSanitizeAttributes');
 }
 
-export function sanitize(params, options) {
-  var message = params[0],
-      contents = prettify.compute([message.htmlBody || message.textBody]),
-      containerId = 'restricted',
-      container;
+export default function htmlSanitizer(html, options) {
+  var containerId = 'restricted',
+      container,
+      FORBID_ATTR_CUSTOM = [];
 
-  if (!message.htmlBody) {
-    container = document.createElement('pre');
-    container.textContent = contents;
-  } else {
-    console.log(options)
-    if (!options.imagesAllowed) {
-      FORBID_ATTR.push('src', 'background');
-    }
-
-    attachSanitizerHooks(containerId, options);
-    var documentElement = DOMPurify.sanitize(contents, {
-      SANITIZE_DOM: true,
-      RETURN_DOM: true,
-      WHOLE_DOCUMENT: true,
-      ALLOW_DATA_ATTR: false,
-      SAFE_FOR_TEMPLATES: true,
-      FORBID_TAGS: FORBID_TAGS,
-      FORBID_ATTR: FORBID_ATTR
-    });
-    detachSanitizerHooks();
-
-    // Create a container element to act like a nested "body".
-    container = document.createElement('div');
-    // Move the sanitized nodes into the real DOM
-    documentElement = document.adoptNode(documentElement);
-    // Move stylesheets into the container. FIXME: What about non-head styles?
-    Array.prototype.slice.call(documentElement.getElementsByTagName('style'))
-    .forEach(function (element) {
-      container.appendChild(element);
-    });
-    // Move body contents into the container
-    Array.prototype.slice.call(documentElement.lastElementChild.childNodes)
-    .forEach(function (element) {
-      container.appendChild(element);
-    });
+  if (!options.imagesAllowed) {
+    FORBID_ATTR_CUSTOM.push('src', 'background');
   }
+
+  attachSanitizerHooks(containerId, options);
+  var documentElement = DOMPurify.sanitize(html, {
+    SANITIZE_DOM: true,
+    RETURN_DOM: true,
+    WHOLE_DOCUMENT: true,
+    ALLOW_DATA_ATTR: false,
+    SAFE_FOR_TEMPLATES: true,
+    FORBID_TAGS: FORBID_TAGS,
+    FORBID_ATTR: FORBID_ATTR.concat(FORBID_ATTR_CUSTOM)
+  });
+  detachSanitizerHooks();
+
+  // Create a container element to act like a nested "body".
+  container = document.createElement('div');
+  // Move the sanitized nodes into the real DOM
+  documentElement = document.adoptNode(documentElement);
+  // Move stylesheets into the container. FIXME: What about non-head styles?
+  Array.prototype.slice.call(documentElement.getElementsByTagName('style'))
+  .forEach(function (element) {
+    container.appendChild(element);
+  });
+  // Move body contents into the container
+  Array.prototype.slice.call(documentElement.lastElementChild.childNodes)
+  .forEach(function (element) {
+    container.appendChild(element);
+  });
 
   container.id = containerId;
   container.style.cssText = 'z-index: 0';
-  return container;
-}
 
-export default Ember.Helper.helper(sanitize);
+  return {
+    content: container.innerHTML,
+    analysis: analysis
+  };
+}

@@ -1,10 +1,10 @@
-import { sanitize } from '../../../helpers/sanitize';
+import htmlSanitizer from '../../../utils/html-sanitizer';
 import { module, test } from 'qunit';
 
-module('Unit | Helper | sanitize');
+module('Unit | Utility | html sanitizer');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  let result = sanitize(42);
+  let result = htmlSanitizer();
   assert.ok(result);
 });

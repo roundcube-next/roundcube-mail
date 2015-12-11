@@ -33,16 +33,13 @@
       background-color: transparent;
       border: none;
       padding: $content-padding;
+      max-width: $max-message-width;
+      margin-left: auto;
+      margin-right: auto;
 
       .image-toggle-box {
         text-align: center;
         background-color: whitesmoke;
-      }
-
-      #restricted {
-        max-width: $max-message-width;
-        margin-left: auto;
-        margin-right: auto;
       }
 
       pre {
