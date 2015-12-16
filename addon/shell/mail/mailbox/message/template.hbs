@@ -2,16 +2,16 @@
   <div class="message-view">
     <div class="subject">{{prettify model.subject}}</div>
     <div class="metadata">
-      <div>From: <span class="from">{{prettify model.from.name}} &lt;{{model.from.email}}&gt;</span></div>
+      <div>{{t 'mail.message.from'}}: <span class="from">{{prettify model.from.name}} &lt;{{model.from.email}}&gt;</span></div>
       {{#if model.to.length}}
-        <div>To:
+        <div>{{t 'mail.message.to'}}:
           {{#each model.to as |recipient|}}
             <span class="to">{{prettify recipient.name}} &lt;{{recipient.email}}&gt;</span>
           {{/each}}
         </div>
       {{/if}}
       {{#if model.cc.length}}
-        <div>CC:
+        <div>{{t 'mail.message.cc'}}:
           {{#each model.cc as |recipient|}}
             <span class="cc">{{prettify recipient.name}} &lt;{{recipient.email}}&gt;</span>
           {{/each}}

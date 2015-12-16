@@ -1,7 +1,7 @@
 {{#if showImagesWarning}}
   <div class="image-toggle-box">
-    <span>This message contains remote images.</span>
-    <a href='#' {{action 'showImages'}}>Click here to show them.</a>
+    <span>{{t 'mail.message.analysis.hasRemoteImages'}}</span>
+    <a href='#' {{action 'showImages'}}>{{t 'mail.message.analysis.clickToShow'}}</a>
   </div>
 {{/if}}
 {{{generatedContent}}}

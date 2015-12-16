@@ -1,6 +1,7 @@
 export function initialize(application) {
   var router = application.resolve('router:main'),
-      apps = application.lookup('service:apps');
+      apps = application.lookup('service:apps'),
+      i18n = application.lookup('service:i18n');
 
   // Register all routes on the application router
   router.map(function () {
@@ -13,7 +14,7 @@ export function initialize(application) {
     });
   });
 
-  apps.register('Mail', 'shell.mail');
+  apps.register(i18n.t('mail.appName'), 'shell.mail');
 }
 
 export default {
