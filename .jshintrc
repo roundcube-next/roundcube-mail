@@ -3,7 +3,8 @@
     "document",
     "window",
     "-Promise",
-    "escape"
+    "escape",
+    "_"
   ],
   "browser": true,
   "boss": true,

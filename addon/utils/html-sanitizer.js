@@ -1,15 +1,15 @@
 /*global DOMPurify, CSSRule*/
 
 function addToSet(set, array) {
-    var l = array.length;
-    while (l--) {
-        set[array[l]] = true;
-    }
-    return set;
+  let l = array.length;
+  while (l--) {
+    set[array[l]] = true;
+  }
+  return set;
 }
 
 // Derived from https://github.com/jmapio/jmap-demo-webmail/blob/master/app/drawHTML.js
-var ALLOWED_CSS_PROPERTY = addToSet( {}, [
+let ALLOWED_CSS_PROPERTY = addToSet({}, [
   // Background
   'background',
   'background-',
@@ -219,7 +219,7 @@ var ALLOWED_CSS_PROPERTY = addToSet( {}, [
   // 'column-width'
 ]);
 
-var FORBID_TAGS = [
+let FORBID_TAGS = [
   'audio',
   'blink',
   'decorator',
@@ -231,14 +231,14 @@ var FORBID_TAGS = [
   'embed'
 ];
 
-var FORBID_ATTR = [
+let FORBID_ATTR = [
   'action',
   'method',
   'tabindex',
   'xmlns'
 ];
 
-var analysis = {};
+let analysis = {};
 
 /**
  * Returns if a property is whitelisted. Prefixes and shorthand names
@@ -247,10 +247,10 @@ var analysis = {};
  * @return {Boolean}
  */
 function isAllowedProperty(property) {
-  var unprefixed = property.charAt(0) === '-' ?
+  let unprefixed = property.charAt(0) === '-' ?
       property.slice(property.indexOf('-', 1) + 1) : property;
 
-  var shorthand = unprefixed.slice(0, unprefixed.indexOf('-') + 1);
+  let shorthand = unprefixed.slice(0, unprefixed.indexOf('-') + 1);
 
   return ALLOWED_CSS_PROPERTY[unprefixed] || ALLOWED_CSS_PROPERTY[shorthand];
 }
@@ -264,7 +264,7 @@ function isAllowedProperty(property) {
  */
 function sanitizeSelector(rootId, selector) {
   // For each comma-separated selector
-  return selector.split(',').map(function (selector) {
+  return selector.split(',').map(function(selector) {
     // Remove mentions of `html` or `body`. They shall be replaced by #rootId
     // FIXME: Content might not render well with `html > body`.
     selector = selector.replace(/^(?:html|body)(?!\w)/i, '');
@@ -284,7 +284,7 @@ function sanitizeSelector(rootId, selector) {
  * @return {String}
  */
 function sanitizeStyle(rootId, options, style) {
-  var output = '';
+  let output = '';
 
   for (let i = 0; i < style.length; i += 1) {
     let name = style[i],
@@ -324,7 +324,7 @@ function sanitizeStyle(rootId, options, style) {
  * @param {CSSStyleSheet} sheet
  */
 function sanitizeStylesheet(rootId, options, sheet, output) {
-  var rules = sheet.cssRules;
+  let rules = sheet.cssRules;
 
   // In case of an already empty stylesheet, do nothing
   if (!rules) {
@@ -332,7 +332,7 @@ function sanitizeStylesheet(rootId, options, sheet, output) {
   }
 
   for (let i = 0; i < rules.length; i += 1) {
-    var rule = rules[i];
+    let rule = rules[i];
 
     switch (rule.type) {
       case CSSRule.STYLE_RULE:
@@ -363,7 +363,7 @@ function attachSanitizerHooks(rootId, options) {
   }
 
   function uponSanitizeAttribute(node, data) {
-    var name = data.attrName,
+    let name = data.attrName,
         value = data.attrValue;
 
     switch (name) {
@@ -376,7 +376,7 @@ function attachSanitizerHooks(rootId, options) {
         break;
       case 'class':
         data.attrValue = value.trim().split(/\s+/)
-          .map(className => (rootId + '-' + className)).join(' ');
+          .map((className) => (rootId + '-' + className)).join(' ');
         break;
       case 'src':
       case 'background':
@@ -404,7 +404,7 @@ function detachSanitizerHooks() {
 }
 
 export default function htmlSanitizer(html, options) {
-  var containerId = 'restricted',
+  let containerId = 'restricted',
       container,
       FORBID_ATTR_CUSTOM = [];
 
@@ -413,13 +413,13 @@ export default function htmlSanitizer(html, options) {
   }
 
   attachSanitizerHooks(containerId, options);
-  var documentElement = DOMPurify.sanitize(html, {
+  let documentElement = DOMPurify.sanitize(html, {
     SANITIZE_DOM: true,
     RETURN_DOM: true,
     WHOLE_DOCUMENT: true,
     ALLOW_DATA_ATTR: false,
     SAFE_FOR_TEMPLATES: true,
-    FORBID_TAGS: FORBID_TAGS,
+    FORBID_TAGS,
     FORBID_ATTR: FORBID_ATTR.concat(FORBID_ATTR_CUSTOM)
   });
   detachSanitizerHooks();
@@ -430,12 +430,12 @@ export default function htmlSanitizer(html, options) {
   documentElement = document.adoptNode(documentElement);
   // Move stylesheets into the container. FIXME: What about non-head styles?
   Array.prototype.slice.call(documentElement.getElementsByTagName('style'))
-  .forEach(function (element) {
+  .forEach(function(element) {
     container.appendChild(element);
   });
   // Move body contents into the container
   Array.prototype.slice.call(documentElement.lastElementChild.childNodes)
-  .forEach(function (element) {
+  .forEach(function(element) {
     container.appendChild(element);
   });
 
@@ -444,6 +444,6 @@ export default function htmlSanitizer(html, options) {
 
   return {
     content: container.innerHTML,
-    analysis: analysis
+    analysis
   };
 }

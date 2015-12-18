@@ -5,9 +5,9 @@ export default Ember.Route.extend({
     return this.modelFor('shell').getMailboxes();
   },
 
-  redirect: function(model, transition) {
+  redirect(model, transition) {
     if (transition.targetName === 'shell.mail.index') {
-      var inboxName = _.result(_.find(model, function(mailbox) {
+      let inboxName = _.result(_.find(model, function(mailbox) {
         return mailbox.role && mailbox.role.value === 'inbox';
       }), 'name');
 
@@ -19,7 +19,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    willTransition: function (transition) {
+    willTransition(transition) {
       this.redirect(this.context, transition);
     }
   }

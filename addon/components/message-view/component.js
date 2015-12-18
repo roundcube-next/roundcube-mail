@@ -4,7 +4,7 @@ import prettify from 'roundcube-mail/helpers/prettify';
 import htmlSanitizer from 'roundcube-mail/utils/html-sanitizer';
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   analysis: {},
   options: {},
@@ -13,11 +13,11 @@ export default Ember.Component.extend({
   showImagesWarning: Ember.computed('analysis', 'options', function() {
     return this.get('analysis.imagesPresent') && !this.get('options.imagesAllowed');
   }),
-  generatedContent: Ember.computed('content', function () {
+  generatedContent: Ember.computed('content', function() {
     return this.get('content');
   }),
 
-  generate: function () {
+  generate() {
     if (this.message.htmlBody) {
       let { content, analysis }
       = htmlSanitizer(prettify.compute([this.message.htmlBody]), this.get('options'));
@@ -31,13 +31,13 @@ export default Ember.Component.extend({
     }
   },
 
-  messageChanged: function () {
+  messageChanged: function() {
     this.set('analysis', {});
     this.set('options.imagesAllowed', false);
     this.generate();
   }.observes('message'),
 
-  initialized: function () {
+  initialized: function() {
     this.messageChanged();
   }.on('init'),
 

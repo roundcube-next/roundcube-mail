@@ -1,14 +1,14 @@
 export function initialize(application) {
-  var router = application.resolve('router:main'),
+  let router = application.resolve('router:main'),
       apps = application.lookup('service:apps'),
       i18n = application.lookup('service:i18n');
 
   // Register all routes on the application router
-  router.map(function () {
-    this.route('shell', { path: '/' }, function () {
-      this.route('mail', { path: '/mail' }, function () {
-        this.route('mailbox', { path: '/:mailbox_name'}, function () {
-          this.route('message', { path: '/:message_id' });
+  router.map(function() {
+    this.route('shell', { path: '/' }, function() {
+      this.route('mail', { path: '/mail' }, function() {
+        this.route('mailbox', { path: '/:mailboxName' }, function() {
+          this.route('message', { path: '/:messageId' });
         });
       });
     });
