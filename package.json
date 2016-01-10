@@ -16,7 +16,7 @@
     "node": ">= 0.10.0"
   },
   "author": "",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
     "broccoli-merge-trees": "^1.0.0",
