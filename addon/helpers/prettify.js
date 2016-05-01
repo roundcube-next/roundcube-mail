@@ -1,3 +1,4 @@
+/* global escape */
 import Ember from 'ember';
 
 export function prettify(params) {
