@@ -9,6 +9,6 @@ module.exports = {
   included: function (app) {
     this._super.included(app);
 
-    app.import(app.bowerDirectory + '/dompurify/dist/purify.min.j');
+    app.import(app.bowerDirectory + '/dompurify/dist/purify.min.js');
   }
 };
