@@ -17,13 +17,14 @@ export default Ember.Route.extend({
       }
 
       // TODO: Need design input before we add ways to fetch more messages
-      mailbox.getMessageList({
+      return mailbox.getMessageList({
         sort: 'date desc',
         collapseThreads: true,
         fetchMessages: true,
         limit: 50
       }).then(function (response) {
-        resolve(response[1]);
+        let messages = response.length ? response[1] : [];
+        resolve(messages);
       }, reject);
     });
   }
