@@ -22,6 +22,10 @@
           color: $ui-text-color;
         }
       }
+      &.disabled {
+        color: $ui-secondary-text-color;
+        cursor: default;
+      }
     }
   }
 }

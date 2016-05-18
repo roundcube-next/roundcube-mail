@@ -3,7 +3,24 @@ import _ from 'lodash';
 
 export default Ember.Route.extend({
   model() {
-    return this.modelFor('shell').getMailboxes();
+    return this.modelFor('shell').getMailboxes()
+      .then(function(mailboxes) {
+        if (!mailboxes.length) {
+          mailboxes = [];
+        }
+
+        // sort mailbox list
+        // TODO: consider hierarchical structure
+        mailboxes.sort(function(a, b) {
+          var s = a.sortOrder - b.sortOrder;
+          if (s === 0) {
+            s = a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+          }
+          return s;
+        });
+
+        return mailboxes;
+      });
   },
 
   redirect: function(model, transition) {
