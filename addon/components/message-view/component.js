@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from './template';
-import prettify from 'roundcube-mail/helpers/prettify';
 import htmlSanitizer from 'roundcube-mail/utils/html-sanitizer';
 
 export default Ember.Component.extend({
@@ -20,13 +19,13 @@ export default Ember.Component.extend({
   generate: function () {
     if (this.message.htmlBody) {
       let { content, analysis }
-      = htmlSanitizer(prettify.compute([this.message.htmlBody]), this.get('options'));
+      = htmlSanitizer(this.message.htmlBody, this.get('options'));
 
       this.set('content', content);
       this.set('analysis', analysis);
     } else {
       let content = document.createElement('pre');
-      content.innerText = prettify.compute([this.message.textBody]);
+      content.innerText = this.message.textBody;
       this.set('content', content);
     }
   },
