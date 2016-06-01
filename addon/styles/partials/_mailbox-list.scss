@@ -26,6 +26,62 @@
         color: $ui-secondary-text-color;
         cursor: default;
       }
+      &:after {
+        content: "";
+        clear: both;
+      }
+
+      .name {
+        float: left;
+        display: block;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .badge + .name {
+        width: 80%;
+      }
+    }
+
+    .list-group {
+      .list-group {
+        margin-bottom: 0;
+
+        .list-group-item {
+          .name {
+            padding-left: $mailbox-list-indent;
+          }
+        }
+        .list-group {
+          .list-group-item {
+            .name {
+              padding-left: $mailbox-list-indent * 2;
+            }
+          }
+          .list-group {
+            .list-group-item {
+              .name {
+                padding-left: $mailbox-list-indent * 3;
+              }
+            }
+            .list-group {
+              .list-group-item {
+                .name {
+                  padding-left: $mailbox-list-indent * 4;
+                }
+              }
+              .list-group {
+                .list-group-item {
+                  .name {
+                    padding-left: $mailbox-list-indent * 5;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

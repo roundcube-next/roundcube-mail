@@ -1,10 +1,15 @@
 <ul class="list-group">
   {{#each mailboxes as |mailbox|}}
-    {{#link-to 'shell.mail.mailbox' mailbox.name class='list-group-item' classNameBindings='mailbox.mayReadItems::disabled' tagName='li'}}
-      {{mailbox.name}}
+    <li>
+    {{#link-to 'shell.mail.mailbox' mailbox class='list-group-item' classNameBindings='mailbox.mayReadItems::disabled' tagName='a'}}
       {{#if mailbox.unreadThreads}}
         <span class="badge">{{mailbox.unreadThreads}}</span>
       {{/if}}
+      <span class="name">{{mailbox.name}}</span>
     {{/link-to}}
+    {{#if mailbox.children.length}}
+      {{mailbox-list mailboxes=mailbox.children}}
+    {{/if}}
+    </li>
   {{/each}}
 </ul>

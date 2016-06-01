@@ -10,7 +10,6 @@ export default Ember.Route.extend({
         }
 
         // sort mailbox list
-        // TODO: consider hierarchical structure
         mailboxes.sort(function(a, b) {
           var s = a.sortOrder - b.sortOrder;
           if (s === 0) {
@@ -25,13 +24,13 @@ export default Ember.Route.extend({
 
   redirect: function(model, transition) {
     if (transition.targetName === 'shell.mail.index') {
-      var inboxName = _.result(_.find(model, function(mailbox) {
+      var inboxId = _.result(_.find(model, function(mailbox) {
         return mailbox.role && mailbox.role.value === 'inbox';
-      }), 'name');
+      }), 'id');
 
       // If a mailbox with the role 'inbox' is found, redirect to it by default
-      if (inboxName) {
-        this.transitionTo('shell.mail.mailbox', inboxName);
+      if (inboxId) {
+        this.transitionTo('shell.mail.mailbox', inboxId);
       }
     }
   },

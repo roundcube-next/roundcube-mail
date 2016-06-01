@@ -5,7 +5,7 @@ export function initialize(application) {
   router.map(function () {
     this.route('shell', { path: '/' }, function () {
       this.route('mail', { path: '/mail' }, function () {
-        this.route('mailbox', { path: '/:mailbox_name'}, function () {
+        this.route('mailbox', { path: '/:mailbox_id'}, function () {
           this.route('message', { path: '/:message_id' });
         });
       });
