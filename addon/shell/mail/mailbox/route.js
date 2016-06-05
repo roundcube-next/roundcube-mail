@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 export default Ember.Route.extend({
   /**
-   * @param {params.mailbox_id} The name of the mailbox ('Inbox', 'Archives')
+   * @param {params.mailbox_id} The numeric ID of the mailbox or mailbox role ('inbox', 'archive')
    */
   model(params) {
     var mailboxId = params.mailbox_id,

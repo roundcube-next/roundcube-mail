@@ -1,7 +1,7 @@
 <ul class="list-group">
   {{#each mailboxes as |mailbox|}}
     <li>
-    {{#link-to 'shell.mail.mailbox' mailbox class='list-group-item' classNameBindings='mailbox.mayReadItems::disabled' tagName='a'}}
+    {{#link-to 'shell.mail.mailbox' mailbox.id class='list-group-item' classNameBindings='mailbox.mayReadItems::disabled' tagName='a'}}
       {{#if mailbox.unreadThreads}}
         <span class="badge">{{mailbox.unreadThreads}}</span>
       {{/if}}
