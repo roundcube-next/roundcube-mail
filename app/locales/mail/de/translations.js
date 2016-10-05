@@ -7,5 +7,9 @@ export default {
       hasRemoteImages: 'Diese Nachricht enthält externe Bilder.',
       clickToShow: 'Anzeigen.'
     }
+  },
+  threads: {
+    prev: 'Vorherige',
+    more: 'Mehr'
   }
 };

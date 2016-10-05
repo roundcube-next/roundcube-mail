@@ -45,4 +45,13 @@
       }
     }
   }
+
+  .btn-next {
+    padding-top: 0;
+  }
+
+  .btn-prev {
+    border-bottom: 1px solid $ui-border-color;
+    padding-bottom: $list-group-margin;
+  }
 }

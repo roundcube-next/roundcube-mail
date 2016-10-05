@@ -8,5 +8,9 @@ export default {
       hasRemoteImages: 'This message contains remote images.',
       clickToShow: 'Click here to show them.'
     }
+  },
+  threads: {
+    prev: 'Previous',
+    more: 'More'
   }
 };
