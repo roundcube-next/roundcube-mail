@@ -1,8 +1,8 @@
 export function initialize(instance) {
-  var apps = instance.container.lookup('service:apps'),
-      i18n = instance.container.lookup('service:i18n');
+  var apps = instance.lookup('service:apps'),
+      i18n = instance.lookup('service:intl');
 
-  apps.register(i18n.t('mail.appName'), 'shell.mail');
+  apps.register('mail.appName', 'shell.mail');
 }
 
 export default {

@@ -1,5 +1,5 @@
 export function initialize(application) {
-  var router = application.resolve('router:main');
+  var router = application.resolveRegistration('router:main');
 
   // Register all routes on the application router
   router.map(function () {
@@ -14,6 +14,6 @@ export function initialize(application) {
 }
 
 export default {
-  name: 'routing',
+  name: 'mail:routing',
   initialize
 };
