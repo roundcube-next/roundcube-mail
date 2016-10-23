@@ -1,4 +1,10 @@
 <div class="mail-pane thread-list">
-  {{thread-list model=model}}
+  {{#if prevPage}}
+  <a {{action "loadPage" true}} class="btn-list btn-prev">{{t 'mail.threads.prev'}}</a>
+  {{/if}}
+  {{thread-list model=messages}}
+  {{#if nextPage}}
+  <a {{action "loadPage" false}} class="btn-list btn-more">{{t 'mail.threads.more'}}</a>
+  {{/if}}
 </div>
 {{outlet}}

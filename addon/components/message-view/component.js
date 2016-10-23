@@ -34,7 +34,7 @@ export default Ember.Component.extend({
     this.set('analysis', {});
     this.set('options.imagesAllowed', false);
     this.generate();
-  }.observes('message'),
+  }.observes('message', 'message.htmlBody', 'message.textBody'),
 
   initialized: function () {
     this.messageChanged();

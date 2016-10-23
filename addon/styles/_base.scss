@@ -3,6 +3,8 @@ $mailbox-list-indent: 20px;
 $thread-list-width: 350px;
 $max-message-width: 700px;
 $content-padding: 10px;
+$list-group-margin: 20px;
+$list-item-padding: 10px 15px;
 
 $ui-font-size: 10pt;
 $thread-list-sender-font-size: 10pt;
@@ -67,5 +69,11 @@ $ui-secondary-text-color: gray;
         float: right;
       }
     }
+  }
+
+  .btn-list {
+    cursor: pointer;
+    display: block;
+    padding: $list-item-padding;
   }
 }
